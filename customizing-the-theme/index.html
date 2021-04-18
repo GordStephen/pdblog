@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Customizing the theme | pdblog, an aggressively simple site generator</title>
+  <meta name="author" content="pdblog project">
+  <meta name="generator" content="pdblog" />
+  <link rel="stylesheet" href="/style.css">
+  <style>
+      
+  </style>
+</head>
+
+<body><div id="main">
+
+<header>
+  <h1><a href="/">pdblog</a></h1>
+  <p>An aggressively simple static site generator</p>
+</header>
+<main>
+  <article class="post">
+    <time datetime="2021-04-13">April 13, 2021</time>
+    <h1>Customizing the theme</h1>
+<p>Information about the look and feel of the site is stored in <code>$THEME_DIR</code>, which by default is the <code>theme</code> directory in the project root. This directory contains the Pandoc HTML templates for the site:</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 73%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>post.html</code></td>
+<td style="text-align: left;">The main template for post pages. It will usually load in <code>header.html</code> and <code>footer.html</code> as partials.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>404.html</code></td>
+<td style="text-align: left;">The template for the site’s 404 page. It will usually load in <code>header.html</code> and <code>footer.html</code> as partials. Note that you need to take care of telling your web server to use this file for 404 responses - pdblog can’t help you with that.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>header.html</code></td>
+<td style="text-align: left;">Common HTML for the top of each page. Used to create the index page, and usually the post and 404 pages as well.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>footer.html</code></td>
+<td style="text-align: left;">Common HTML for the bottom of each page. Used to create the index page, and usually the post and 404 pages as well.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>highlighting.theme</code></td>
+<td style="text-align: left;"><a href="https://docs.kde.org/trunk5/en/kate/katepart/color-themes.html#color-themes-json">KDE-style</a> syntax highlighting color scheme used by Pandoc</td>
+</tr>
+</tbody>
+</table>
+<p><code>$THEME_DIR/includes</code> contains theme-related files (such as CSS or Javascript) that will be copied directly directly into the site root. For example, the default theme includes the file <code>/$THEME_DIR/includes/style.css</code> which is copied to <code>/style.css</code> in the resulting web site.</p>
+  </article>
+</main>
+
+<footer>
+  <div id="content">
+    <p><a href="https://github.com/GordStephen/pdblog">pdblog on GitHub</a> | <a href="https://github.com/GordStephen/pdblog/issues">Open an issue</a></p>
+  </div>
+</footer>
+
+</div></body>
+
+</html>
