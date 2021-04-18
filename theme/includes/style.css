@@ -1,0 +1,157 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: sans-serif;
+}
+
+div#main {
+    display: grid;
+    min-height: 100%;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+}
+
+header {
+    margin: 0;
+    padding: 1em;
+    color: #333;
+    background-color: #eee;
+}
+
+header h1 {
+    max-width: 45rem;
+    margin: auto;
+}
+
+header h1 a {
+    color: #333;
+    text-decoration: none;
+}
+
+header p {
+    max-width: 45rem;
+    margin: auto;
+    font-style: italic;
+}
+
+ol.posts {
+    list-style-type: none;
+    max-width: 45rem;
+    margin: auto;
+    padding: 0.5em;
+}
+
+ol.posts li {
+    margin: 0;
+    padding: 0.5em;
+}
+
+ol.posts time, main article time {
+    display: block;
+    color: #aaa;
+    font-size: 0.8em;
+}
+
+ol.posts a {
+    display: block;
+    padding: 0.1em 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+article {
+    max-width: 45rem;
+    margin: auto;
+    padding: 1em;
+    color: #333;
+    text-align: justify;
+}
+
+article h1 {
+    margin-top: 0.5em;
+}
+
+article p {
+    color: #555;
+}
+
+article pre {
+    padding: 1em;
+    background-color: #f8f8f8;
+}
+
+article code {
+    background-color: #f8f8f8;
+}
+
+article pre code {
+    background-color: transparent;
+}
+
+article table {
+    border-collapse: collapse;
+    border-width: 1px;
+    border-color: #ddd;
+    margin: auto;
+}
+
+article table th, article table td {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+}
+
+article thead tr, article tr.even {
+    background-color: #f8f8f8;
+}
+
+article tr.odd {
+}
+
+article img {
+    width: 100%;
+}
+
+article figure {
+    background-color: #f8f8f8;
+    text-align: center;
+    padding: 0.5em;
+}
+
+article figcaption {
+    font-style: italic;
+    font-size: 0.8em;
+    color: #555;
+    padding-top: 0.5em;
+}
+
+article.error404 {
+    text-align: center;
+}
+
+article.error404 h1 {
+    font-size: 6em;
+    margin-bottom: 0;
+}
+
+footer {
+    margin: 0;
+    padding: 0;
+    background-color: #eee;
+    color: #333;
+}
+
+footer div#content {
+    max-width: 45rem;
+    margin: auto;
+    padding: 1em;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+footer div#content p a {
+    color: #333;
+}
