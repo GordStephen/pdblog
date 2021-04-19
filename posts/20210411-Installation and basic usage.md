@@ -9,11 +9,11 @@ Then, the easiest way to get continue is probably to clone the `pdblog`
 repository using git:
 
 ```sh
-git clone https://github.com/GordStephen/pdblog
+git clone https://github.com/GordStephen/pdblog.git myblog
 ```
 
-From there you can run `./pdblog.sh` in the repository root to generate
-the default site.
+From there you can run `./pdblog.sh` in the repository root (`myblog` in the
+example above) to generate the default site.
 
 # Configuration
 
