@@ -23,7 +23,7 @@
   <article class="post">
     <time datetime="2021-04-18">April 18, 2021</time>
     <h1>Deploying on GitHub Pages</h1>
-<p>This site is (as of right now) hosted on GitHub pages, so if you’re looking to host there as well, it should mostly ‘just work’. The project’s git repository includes a <code>.github</code> directory with a GitHub Actions workflow defined to download pandoc, run pdblog, and then push the output files to a <code>gh-pages</code> branch. So if you ‘fork’ (or just clone) the repository and make your desired changes, there’s only a few other steps needed:</p>
+<p>This site is (as of right now) hosted on GitHub Pages, so if you’re looking to host there as well, it should mostly ‘just work’. The project’s git repository includes a <code>.github</code> directory with a GitHub Actions workflow defined to download Pandoc, run pdblog, and then push the output files to a <code>gh-pages</code> branch. So if you fork or ‘Use this template’ on the GitHub website and make your desired changes, there’s only a few other steps needed:</p>
 <ol type="1">
 <li><p>Edit the <code>$ASSETS_DIR/CNAME</code> file to refer to your own domain (assuming you’re using a custom domain - if not, you can just delete the file). Github Pages needs this file in the root of the branch containing the site contents.</p></li>
 <li><p>Enable GitHub Pages in your repository settings, and set it to get site contents from the <code>gh-pages</code> branch. You’ll want to do this <em>after</em> you push your site customizations, othewise you’ll just end up temporarily hosting a copy of this site.</p></li>
