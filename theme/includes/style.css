@@ -75,7 +75,7 @@ article h1 {
     margin-top: 0.5em;
 }
 
-article p {
+article p, article li {
     color: #555;
 }
 
