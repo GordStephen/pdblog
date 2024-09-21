@@ -2,28 +2,37 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master
+      - pdblog.org
 
 jobs:
   deploy:
+
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page-url }}
+
     steps:
 
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
-      - name: Install pandoc # We want a newer version than Ubuntu 20.04 offers
-        run: |
-          wget https://github.com/jgm/pandoc/releases/download/2.9.2.1/pandoc-2.9.2.1-1-amd64.deb
-          sudo dpkg -i pandoc-2.9.2.1-1-amd64.deb
+      - name: Install pandoc
+        run: sudo apt-get install pandoc
 
       - name: Build with pdblog
         run: ./pdblog.sh
 
+      - name: Package the site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
       - name: Deploy to GitHub Pages
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: gh-pages
-          FOLDER: out
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: deployment
+        uses: actions/deploy-pages@v4
