@@ -9,6 +9,9 @@ SITE_SUBTITLE="An aggressively simple static site generator"
 SITE_DESCRIPTION="pdblog, an aggressively simple site generator"
 SITE_FOOTER='<a href="https://github.com/GordStephen/pdblog">pdblog on GitHub</a> | <a href="https://github.com/GordStephen/pdblog/issues">Open an issue</a>'
 
+POST_FORMAT="markdown"
+POST_EXTENSION=".md"
+
 POSTS_DIR="posts"
 ASSETS_DIR="assets"
 THEME_DIR="theme"
@@ -42,12 +45,15 @@ echo "" | pandoc --template="$header" \
                  -t html  > "$homepage"
 printf '\n<main>\n  <ol class="posts">\n' >> "$homepage"
 
-ls $POSTS_DIR/*.md | sort -r | while read file; do
+# [0-9]\{8\} doesn't seem to work, for some reason
+post_regex='[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-*'$POST_EXTENSION
+
+find $POSTS_DIR -name $post_regex | sort -r | while read file; do
 
     [ -f "$file" ] || continue
 
     # Extract date and title text
-    filename=$(basename "$file" ".md")
+    filename=$(basename "$file" $POST_EXTENSION)
     title=$(echo "$filename" | sed -E 's/^[0-9]{8}-(.*)$/\1/')
     timestamp=$(echo "$filename" | sed -E 's/^([0-9]{8})-.*$/\1/')
 
@@ -76,7 +82,7 @@ ls $POSTS_DIR/*.md | sort -r | while read file; do
            --variable sitefooter="$SITE_FOOTER" \
            --highlight-style "$highlight_file" \
            --shift-heading-level-by=1 \
-           -f markdown -t html "$file" > "$page"
+           -f $POST_FORMAT -t html "$file" > "$page"
 
     # Update home page
     printf '    <li>\n      <time datetime="%s">%s</time>\n      <a href="%s">%s</a>\n    </li>\n' "$machinetime" "$humantime" "$link" "$title" >> "$homepage"
