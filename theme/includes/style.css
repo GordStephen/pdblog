@@ -20,17 +20,19 @@ header {
     background-color: #eee;
 }
 
-header h1 {
+#header-title {
     max-width: 45rem;
     margin: auto;
+    font-size: 2em;
+    font-weight: bold;
 }
 
-header h1 a {
+#header-title a {
     color: #333;
     text-decoration: none;
 }
 
-header p {
+#header-subtitle {
     max-width: 45rem;
     margin: auto;
     font-style: italic;
