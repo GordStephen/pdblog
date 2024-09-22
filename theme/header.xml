@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xml:base="$siteurl$" xmlns="http://www.w3.org/2005/Atom">
+  <id>$siteurl$/</id>
+  <title>$sitetitle$</title>
+  <subtitle>$sitesubtitle$</subtitle>
+  <author><name>$author$</name></author>
+  <updated>$now$</updated>
+  <link rel="self" href="/atom.xml" />
+  <link rel="alternate" type="text/html" href="/" />
+  <generator>pdblog</generator>
