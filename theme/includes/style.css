@@ -70,7 +70,6 @@ article {
     margin: auto;
     padding: 1em;
     color: #333;
-    text-align: justify;
 }
 
 article h1 {
@@ -79,15 +78,18 @@ article h1 {
 
 article p, article li {
     color: #555;
+    text-align: justify;
 }
 
 article pre {
     padding: 1em;
     background-color: #f8f8f8;
+    overflow: scroll;
 }
 
 article code {
     background-color: #f8f8f8;
+    overflow: scroll;
 }
 
 article pre code {
@@ -99,6 +101,7 @@ article table {
     border-width: 1px;
     border-color: #ddd;
     margin: auto;
+    overflow: scroll;
 }
 
 article table th, article table td {
