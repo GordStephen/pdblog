@@ -1,7 +1,5 @@
 #! /usr/bin/env sh
 
-# === begin config ===
-
 SITE_URL="https://pdblog.org"
 SITE_AUTHOR="pdblog project"
 SITE_TITLE="pdblog"
@@ -17,18 +15,23 @@ ASSETS_DIR="assets"
 THEME_DIR="theme"
 OUT_DIR="out"
 
-# === end config ===
-
 html_header_template="$THEME_DIR"/header.html
 html_footer_template="$THEME_DIR"/footer.html
 html_post_template="$THEME_DIR"/post.html
 html_error_template="$THEME_DIR"/404.html
-
 atom_header_template="$THEME_DIR"/header.xml
 atom_footer_template="$THEME_DIR"/footer.xml
 atom_entry_template="$THEME_DIR"/entry.xml
-
+includes_folder=$THEME_DIR/includes
 highlight_file="$THEME_DIR"/highlighting.theme
+
+homepage="$OUT_DIR"/index.html
+errorpage="$OUT_DIR"/404.html
+feed="$OUT_DIR"/atom.xml
+
+# [0-9]\{8\} doesn't seem to work, for some reason
+post_regex='[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-*'$POST_EXTENSION
+now=$(date -Iseconds)
 
 expand_template() {
     pandoc --template="$1" \
@@ -38,7 +41,7 @@ expand_template() {
            --variable sitetitle="$SITE_TITLE" \
            --variable sitesubtitle="$SITE_SUBTITLE" \
            --variable sitefooter="$SITE_FOOTER" \
-           --variable now="$(date -Iseconds)" \
+           --variable now="$now" \
            -t html < /dev/null
 }
 
@@ -67,57 +70,34 @@ atom_entry() {
            --metadata title="$1" \
            --metadata author="$SITE_AUTHOR" \
            --variable timestamp="$2" \
-           --variable url="$3" \
+           --variable url="$SITE_URL""$3" \
+           --no-highlight \
            -f "$POST_FORMAT" -t html "$4"
 }
 
-if [ -d "$OUT_DIR" ]; then
-    echo "Destination directory $OUT_DIR already exists, removing..."
-    rm -r "$OUT_DIR"
-fi
-
-# Process files to HTML
-
+echo "Preparing destination directory $OUT_DIR..."
 mkdir -p "$OUT_DIR"
-homepage="$OUT_DIR"/index.html
-errorpage="$OUT_DIR"/404.html
-feed="$OUT_DIR"/atom.xml
+find "$OUT_DIR" -mindepth 1 -delete
 
-echo "Generating $errorpage..."
 expand_template "$html_error_template" > "$errorpage"
-
-echo "Generating $homepage..."
+expand_template "$atom_header_template" > "$feed"
 expand_template "$html_header_template" > "$homepage"
 printf '\n<main>\n  <ol class="posts">\n' >> "$homepage"
 
-echo "Generating $feed..."
-expand_template "$atom_header_template" > "$feed"
+find $POSTS_DIR -name $post_regex -type f | sort -r | while read file; do
 
-# [0-9]\{8\} doesn't seem to work, for some reason
-post_regex='[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-*'$POST_EXTENSION
-
-find $POSTS_DIR -name $post_regex | sort -r | while read file; do
-
-    [ -f "$file" ] || continue
-
-    # Extract date and title text
     filename=$(basename "$file" $POST_EXTENSION)
-    title=$(echo "$filename" | sed -E 's/^[0-9]{8}-(.*)$/\1/')
-    timestamp=$(echo "$filename" | sed -E 's/^([0-9]{8})-.*$/\1/')
-    timestamp=$(date -d "$timestamp" '+%Y-%m-%d')
+    timestamp=$(date -d ${filename%%-*} '+%Y-%m-%d')
 
-    # Process title text
-    slug=$(echo "$title" | tr -dc '[:alnum:][:space:]'  | tr '[:upper:]' '[:lower:]' | tr -s ' -_'  | tr ' _' '-' )
-    link=/"$slug"
-    url="$SITE_URL"/"$slug"
-    page="$OUT_DIR"/"$slug"/index.html
+    title=${filename#*-}
+    slug=$(echo "$title" | tr -dc '[:alnum:][:space:]'  | tr '[:upper:]' '[:lower:]' | tr ' _' '-' | tr -s '-' )
+    pagedir="$OUT_DIR/$slug"
 
-    echo "Processing $file to $page"
-
-    mkdir -p $(dirname "$page")
-    html_post "$title" "$timestamp" "$file" > "$page"
-    html_entry "$title" "$timestamp" "$link" >> "$homepage"
-    atom_entry "$title" "$timestamp" "$url" "$file" >> "$feed"
+    echo "Processing $file..."
+    mkdir -p "$pagedir"
+    html_post "$title" "$timestamp" "$file" > "$pagedir/index.html"
+    html_entry "$title" "$timestamp" "/$slug" >> "$homepage"
+    atom_entry "$title" "$timestamp" "/$slug" "$file" >> "$feed"
 
 done
 
@@ -125,16 +105,14 @@ printf '  </ol>\n</main>\n\n' >> "$homepage"
 expand_template "$html_footer_template" >> "$homepage"
 expand_template "$atom_footer_template" >> "$feed"
 
-# Copy assets and theme includes
-
 for f in $ASSETS_DIR/*; do
     [ -f "$f" ] || [ -d "$f" ] || continue
-    echo "Copying $f to $OUT_DIR/"
+    echo "Copying $f to $OUT_DIR/${f##*/}"
     cp -r $f $OUT_DIR/
 done
 
-for f in $THEME_DIR/includes/*; do
+for f in $includes_folder/*; do
     [ -f "$f" ] || [ -d "$f" ] || continue
-    echo "Copying $f to $OUT_DIR/"
+    echo "Copying $f to $OUT_DIR/${f##*/}"
     cp -r $f $OUT_DIR/
 done
