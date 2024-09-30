@@ -2,8 +2,7 @@ In addition to the HTML site index on the homepage, pdblog now produces an
 [Atom feed](https://en.wikipedia.org/wiki/Atom_(Web_standard))
 of all your blog content, so visitors can follow your posts from their feed
 reader of choice! By default the feed is created at `/atom.xml`, although
-this can easily be changed to something else in the variable configuration
-section near the top of `pdblog.sh`:
+this can easily be changed to something else in `config.sh`:
 
 ```sh
 homepage="$OUT_DIR"/index.html

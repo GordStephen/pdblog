@@ -50,24 +50,19 @@ Eve      Green             Apple
 Finally, here's an excerpt from `pdblog.sh`, with syntax highlighing applied:
 
 ```sh
-header="$THEME_DIR"/header.html
-post_template="$THEME_DIR"/post-template.html
-error_template="$THEME_DIR"/404.html
-footer="$THEME_DIR"/footer.html
-highlight_file="$THEME_DIR"/highlighting.theme
+for f in $ASSETS_DIR/*; do
+    [ -f "$f" ] || [ -d "$f" ] || continue
+    echo "Copying $f to $OUT_DIR/${f##*/}"
+    cp -r $f $OUT_DIR/
+done
 
-if [ -d "$OUT_DIR" ]; then
-    echo "Destination directory $OUT_DIR already exists, removing..."
-    rm -r "$OUT_DIR"
-fi
-
-# Process files to HTML
-
-mkdir -p "$OUT_DIR"
-homepage="$OUT_DIR"/index.html
-errorpage="$OUT_DIR"/404.html
+for f in $includes_folder/*; do
+    [ -f "$f" ] || [ -d "$f" ] || continue
+    echo "Copying $f to $OUT_DIR/${f##*/}"
+    cp -r $f $OUT_DIR/
+done
 ```
 
-If Pandoc can convert something to HTML, it can be used in your blog (although
-you may need to augment your theme's CSS to make it look nice). Feel free to
-suggest CSS additions to the default theme's style sheet!
+Generally, if Pandoc can convert something to HTML, it can be used in your blog
+(although you may need to augment your theme's CSS to make it look nice). Feel
+free to suggest CSS additions to the default theme's style sheet!

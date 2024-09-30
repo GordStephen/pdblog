@@ -22,7 +22,12 @@ This directory contains the Pandoc HTML templates for the site:
                      syntax highlighting color scheme used by Pandoc 
 -------------------- ----------------------------------------------------------
 
-`$THEME_DIR/includes` contains theme-related files (such as CSS or Javascript)
-that will be copied directly directly into the site root. For example, the
-default theme includes the file `/$THEME_DIR/includes/style.css` which is
-copied to `/style.css` in the resulting web site.
+There are templates for generating the site's Atom feed (`header.xml`,
+`entry.xml`, and `footer.xml`) in `$THEME_DIR` as well, although these are less
+likely to require customization.
+
+Finally, `$THEME_DIR/includes` contains theme-related files (such as CSS or
+Javascript) that will be copied directly into the site root.
+For example, the default theme includes the file
+`$THEME_DIR/includes/style.css` which is copied to `/style.css` in the
+resulting web site.
