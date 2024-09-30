@@ -1,9 +1,9 @@
-SITE_URL=""
-SITE_AUTHOR=""
-SITE_TITLE=""
-SITE_SUBTITLE=""
-SITE_DESCRIPTION=""
-SITE_FOOTER=''
+SITE_URL="https://pdblog.org"
+SITE_AUTHOR="pdblog project"
+SITE_TITLE="pdblog"
+SITE_SUBTITLE="An aggressively simple static site generator"
+SITE_DESCRIPTION="pdblog, an aggressively simple site generator"
+SITE_FOOTER='<a href="https://github.com/GordStephen/pdblog">pdblog on GitHub</a> | <a href="https://github.com/GordStephen/pdblog/issues">Open an issue</a> | <a href="/atom.xml">Atom</a>'
 
 POST_FORMAT="markdown"
 POST_EXTENSION=".md"
